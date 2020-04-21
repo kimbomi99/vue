@@ -13,20 +13,20 @@
             <body>
                 <div id="app">
                     <label>
-                        <input type="radio" v-bind:value="ture" v-model="visible" />
+                        <input type="radio" v-bind:value="1" v-model="visible" />
                         남자
                     </label>
                     <label>
-                        <input type="radio" v-bind:value="false" v-model="visible" />
+                        <input type="radio" v-bind:value="2" v-model="visible" />
                         여자
                     </label>
-                    <div class="error" v-if='visible'>성별 입력은 필수입니다.</div>
+                    <div class="error" v-if='!visible'>성별 입력은 필수입니다.</div>
                     </div>
                     <script type= "text/javascript">
                     var app=new Vue({
                         el: '#app',
                         data: {
-                            visible:'ture'
+                            visible: ''
                         }
                     })
                     </script>
