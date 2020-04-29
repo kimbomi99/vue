@@ -1,0 +1,69 @@
+<html>
+<head>
+  <meta charset="utf-8" />
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <style>
+    div { padding: 30px; margin: 30px auto; max-width: 600px; 
+      border: 1px solid #ccc; box-shadow: 3px 3px 3px #aaa; }
+    table { border-collapse: collapse; margin: 40px auto; }
+    td { width: 50px; height: 50px; border: 1px solid gray; font-size: 20pt; 
+      text-align: center; cursor: pointer; }
+      
+  </style>
+</head>
+<body>
+  <div id="app">
+    <table>
+      <tr v-for="(row, index1) in matrix"   v-bind:key="index1">
+        <td v-for="(value, index2) in row"  v-bind:key="index2"
+            v-on:Click="onClick(index1, index2)"
+            v-bind:style="{backgroundColor: colors(value)}" >
+             {{ value }}
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <script type="text/javascript">
+    var app = new Vue({
+      el: '#app',
+      data: {
+        size: 3,
+        matrix: [],
+        state:[],
+        i:0
+
+      },
+      created() {
+        for (let r = 0; r < this.size; ++r) {
+          this.matrix[r] = [];
+          for (let c = 0; c < this.size; ++c) 
+            this.matrix[r][c] = r * this.size + c + 1;
+        }
+      },
+      methods: {
+          onClick: function(r, c){
+            this.state[this.i]=this.matrix[r][c];
+            this.i++;
+            for(let k=0; k<this.i; k++){
+              if(this.state[k]==this.matrix[r][c]){
+                for(let j=k+1; j<this.i; j++)
+                  if(this.state[j]==this.matrix[r][c]){
+                    this.state[j]="";
+                    this.i--;
+                }
+              }
+            }
+          },
+          colors(value){
+            for(let k=0; k<this.i; k++){
+              if(this.state[k]==value){
+                return "#ffa";
+              }
+            }
+          }
+      }
+    })
+   </script>
+</body>    
+</html>
