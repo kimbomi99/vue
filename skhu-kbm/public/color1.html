@@ -14,8 +14,8 @@
 <body>
   <div id="app">
     <table>
-      <tr v-for="(row, index1) in matrix" >
-        <td v-for="(value, index2) in row"
+      <tr v-for="(row, index1) in matrix"  v:bind:key="index1">
+        <td v-for="(value, index2) in row" v:bind:key="index2"
             v-on:Click="onClick(index1, index2)"
             v-bind:style="{backgroundColor: colors(value)}" >
              {{ value }}
