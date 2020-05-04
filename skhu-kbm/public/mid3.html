@@ -11,11 +11,12 @@
 </head>
 <body>
   <div id="app">
-    <input type="text" v-model="value" />
+    <input type="text" v-bind:v-model="value" />
     <button type="button" v-on:click="random">생성</button>
-    <span v-for="a in number")>
+    <span v-for="a in number"  v-bind:value="2">
         {{a}}
     </span>
+    {{value}}
     </div>
    
   <script type="text/javascript">
@@ -26,7 +27,7 @@
         number:[]
       },
       methods: {
-        random: function() {
+        random() {
           for(let i=0; i<this.value; i++)
             this.number[i]=Math.floor(Math.random()*10);
         }
