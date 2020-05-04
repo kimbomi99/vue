@@ -13,16 +13,22 @@
   <div id="app">
     <input type="text" v-model="value" />
     <button type="button" v-on:click="random">생성</button>
+    <span v-for="a in number")>
+        {{a}}
+    </span>
+    </div>
    
   <script type="text/javascript">
     var app = new Vue({
       el: '#app',
       data: {
-        value:0 
+        value:0,
+        number:[]
       },
       methods: {
         random: function() {
-          ;
+          for(let i=0; i<this.value; i++)
+            this.number[i]=Math.floor(Math.random()*10);
         }
       }
     })    
