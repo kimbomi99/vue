@@ -6,17 +6,17 @@
     div#app { padding: 50px; margin: 30px auto; max-width: 300px; 
       border: 1px solid #ccc; box-shadow: 3px 3px 3px #aaa; font-size: 11pt; }
     button { padding: 0.5em 1em; }
-    input[type=text]{width:150px; height: 30px; }
+    span{display:inline-block; margin: 5px; padding:8px 15px; border:1px solid black; cursor: pointer;}
+    input[type=text]{width:200px; height: 30px; }
   </style>
 </head>
 <body>
   <div id="app">
-    <input type="text" v-bind:v-model="value" />
+    <input type="text" v-model="value" />
     <button type="button" v-on:click="random">생성</button>
-    <span v-for="a in number"  v-bind:value="2">
+    <span v-for="a in number">
         {{a}}
     </span>
-    {{value}}
     </div>
    
   <script type="text/javascript">
@@ -28,9 +28,11 @@
       },
       methods: {
         random() {
-          for(let i=0; i<this.value; i++)
-            this.number[i]=Math.floor(Math.random()*10);
+          for(let i=0; i<this.value; i++){
+            
+            Vue.set(this.number, i, Math.floor(Math.random()*10));
         }
+    }
       }
     })    
    </script>

@@ -9,7 +9,7 @@ function sum(a){
 function test_sum(f){
     let s=[];
     for(let i=0; i<5; i++){
-        s[i]=Math.floor(Math.random()*10);
+        s[i]=Math.floor(Math.random()*11);
     }
     let result=f(s);
     console.log(result);
