@@ -1,0 +1,84 @@
+<html>
+<head>
+  <meta charset="utf-8" />
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="todo1.css">
+  <style> ul { list-style-type: none; } </style>
+</head>
+<body>
+  <div id="app">
+    <h1>할 일</h1>
+    <ul>
+      <li v-for="(todo, key) in todoMap" v-bind:key="key">
+        <input type="checkbox"  v-on:click="list(key)" class="clickable" />
+        {{ todo }}
+      </li>
+    </ul>
+    <input type="text" v-model.trim="todo" />
+    <button type="button" v-on:click="addTodo" v-bind:disabled="!todo">할일 추가</button>
+    <button type="button" v-on:click="deleteTodo" v-show= "i>0">삭제</button>
+  </div>
+
+  <script type="text/javascript">
+    var app = new Vue({
+      el: '#app',
+      data: {
+        todoMap: [],
+        checked: {},
+        todo: "",
+        checklist:{},
+        i:0,
+        selectedKey: null
+      },
+      methods: {
+        list: function(key){
+                this.checklist[key]=key;
+
+                if(!this.checked[key]){
+                    this.checked[key] = true;
+                    this.i++;
+                }
+
+                else if(this.checked[key]){
+                    this.checked[key] = false;
+                    this.i--;
+                }
+        },
+
+        addTodo: function() {
+          let s=JSON.stringify(this.todo);
+          axios.post('https://skhu-kbm.firebaseio.com/todo1.json', s)
+          .then(response=> this.reload());
+          this.todo="";
+        },
+
+        deleteTodo: function() {
+          if(confirm("삭제하시겠습니까?")==false) 
+                return;
+          for(let key in this.checked){
+
+            if(this.checked[key]){
+                this.selectedKey=this.checklist[key];
+                axios.delete('https://skhu-kbm.firebaseio.com/todo1/'+this.selectedKey+'.json')
+            .then(response => this.reload());
+            }
+            
+          }
+          this.checklist=[];
+          this.checked=[];
+          this.i=0;
+        },
+        reload: function(){
+            axios.get('https://skhu-kbm.firebaseio.com/todo1.json')
+            .then(response=> this.todoMap=response.data);
+        }
+      }
+    })
+
+    window.onload = function() {
+        app.reload();
+    }
+   </script>
+</body>
+</html>
